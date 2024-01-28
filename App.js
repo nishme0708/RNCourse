@@ -1,26 +1,9 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import Form from './Form';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hellol</Text>
-      <Text style={styles.button}>Another peice of text</Text>
-      <Button title='Tap' />
-    </View>
+  <Form></Form>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'tomato',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 16,
-    borderWidth: 2,
-    borderColor: '#343322',
-    padding: 16,
-  },
-});
