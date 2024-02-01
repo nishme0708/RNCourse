@@ -1,9 +1,35 @@
 import { useState } from 'react';
-import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 
 const Form = () => {
   const [goalText, setGoalText] = useState('');
-  const [goals, setGoals] = useState([]);
+  const currentGoals = [
+    'Goal 1',
+    'Goal 2',
+    'Goal 3',
+    'Goal 4',
+    'Goal 5',
+    'Goal 6',
+    'Goal 7',
+    'Goal 8',
+    'Goal 9',
+    'Goal 10',
+    'Goal 11',
+    'Goal 12',
+    'Goal 13',
+    'Goal 14',
+    'Goal 15',
+    'Goal 16',
+  ];
+  const [goals, setGoals] = useState(currentGoals);
   const inputHandler = (enteredText) => {
     setGoalText(enteredText);
   };
@@ -23,12 +49,14 @@ const Form = () => {
         <Button title='Add goals' onPress={addGoal}></Button>
       </View>
       <View style={styles.listContainer}>
-        <Text>List of goals...</Text>
-        {goals.map((goal, index) => (
-          <View style={styles.goal} key={index}>
-            <Text style={styles.goalText}>{goal}</Text>
-          </View>
-        ))}
+        <ScrollView>
+          <Text>List of goals...</Text>
+          {goals.map((goal, index) => (
+            <View style={styles.goal} key={index}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
