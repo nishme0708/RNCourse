@@ -8,9 +8,10 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 const Form = () => {
-  const [goalText, setGoalText] = useState('');
   const currentGoals = [
     'Goal 1',
     'Goal 2',
@@ -30,33 +31,20 @@ const Form = () => {
     'Goal 16',
   ];
   const [goals, setGoals] = useState(currentGoals);
-  const inputHandler = (enteredText) => {
-    setGoalText(enteredText);
-  };
-  const addGoal = () => {
+
+  const addGoal = (goalText) => {
     setGoals([...goals, goalText]);
-    setGoalText('');
   };
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder='Your goals'
-          style={styles.textInput}
-          value={goalText}
-          onChangeText={inputHandler}
-        ></TextInput>
-        <Button title='Add goals' onPress={addGoal}></Button>
-      </View>
+      <GoalInput addGoal={addGoal}></GoalInput>
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
           keyExtractor={(item, index) => item + index}
-          renderItem={(goalData) => (
-            <View style={styles.goal}>
-              <Text style={styles.goalText}>{goalData.item}</Text>
-            </View>
-          )}
+          renderItem={(goalData) => {
+            return <GoalItem goal={goalData.item} />;
+          }}
         ></FlatList>
       </View>
     </View>
