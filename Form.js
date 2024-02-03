@@ -49,14 +49,15 @@ const Form = () => {
         <Button title='Add goals' onPress={addGoal}></Button>
       </View>
       <View style={styles.listContainer}>
-        <ScrollView>
-          <Text>List of goals...</Text>
-          {goals.map((goal, index) => (
-            <View style={styles.goal} key={index}>
-              <Text style={styles.goalText}>{goal}</Text>
+        <FlatList
+          data={goals}
+          keyExtractor={(item, index) => item + index}
+          renderItem={(goalData) => (
+            <View style={styles.goal}>
+              <Text style={styles.goalText}>{goalData.item}</Text>
             </View>
-          ))}
-        </ScrollView>
+          )}
+        ></FlatList>
       </View>
     </View>
   );
