@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
+import { StatusBar } from 'expo-status-bar';
 
 const Form = () => {
   const currentGoals = [
@@ -31,30 +32,59 @@ const Form = () => {
     'Goal 16',
   ];
   const [goals, setGoals] = useState(currentGoals);
+  const [openModal, setOpenModal] = useState(false);
+
+  const openModalView = () => {
+    setOpenModal(true);
+  };
+
+  const closeModalView = () => {
+    setOpenModal(false);
+  };
 
   const addGoal = (goalText) => {
     setGoals([...goals, goalText]);
+    closeModalView();
+  };
+  const deleteGoal = (goal) => {
+    setGoals(goals.filter((g) => g != goal));
   };
   return (
-    <View style={styles.appContainer}>
-      <GoalInput addGoal={addGoal}></GoalInput>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={goals}
-          keyExtractor={(item, index) => item + index}
-          renderItem={(goalData) => {
-            return <GoalItem goal={goalData.item} />;
-          }}
-        ></FlatList>
+    <>
+      <StatusBar style='light'></StatusBar>
+      <View style={styles.appContainer}>
+        <Button
+          title='Add New Goal'
+          color='#a065ec'
+          onPress={openModalView}
+        ></Button>
+        {openModal && (
+          <GoalInput
+            addGoal={addGoal}
+            visible={openModal}
+            closeModal={closeModalView}
+          ></GoalInput>
+        )}
+        <View style={styles.listContainer}>
+          <FlatList
+            data={goals}
+            keyExtractor={(item, index) => item + index}
+            renderItem={(goalData) => {
+              return (
+                <GoalItem goal={goalData.item} handleDelete={deleteGoal} />
+              );
+            }}
+          ></FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'tomato',
+    backgroundColor: '#1e085a',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -67,6 +97,8 @@ const styles = StyleSheet.create({
   appContainer: {
     padding: 50,
     flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: '#1e085a',
   },
   inputContainer: {
     flexDirection: 'row',
